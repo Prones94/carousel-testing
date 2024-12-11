@@ -48,3 +48,36 @@ it('matches Carousel snapshot', () => {
   )
   expect(asFragment()).toMatchSnapshot()
 })
+
+describe("Carousel Component", () => {
+  it("left and right arrows should not do the same thing", () => {
+    const { getByText, container } = render(
+      <Carousel photos={TEST_IMAGES} title="Test Carousel" />
+    )
+
+    const rightArrow = container.querySelector(".bi-arrow-right-circle")
+    fireEvent.click(rightArrow)
+
+    expect(getByText("testing image 2")).toBeInTheDocument()
+
+    const leftArrow = container.querySelector(".bi-arrow-left-circle")
+    fireEvent.click(leftArrow)
+
+    expect(getByText("testing image 1")).toBeInTheDocument()
+  })
+
+  it("left arrow moves to the previous image", () => {
+    const { getByText, container } = render(
+      <Carousel photos={TEST_IMAGES} title="Test Carousel" />
+    )
+
+    const rightArrow = container.querySelector(".bi-arrow-right-circle")
+    fireEvent.click(rightArrow)
+    expect(getByText("testing image 2")).toBeInTheDocument()
+    const leftArrow = container.querySelector(".bi-arrow-left-circle")
+    fireEvent.click(leftArrow)
+
+    expect(getByText("testing image 1")).toBeInTheDocument()
+  })
+
+})
