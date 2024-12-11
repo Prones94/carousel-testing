@@ -79,5 +79,26 @@ describe("Carousel Component", () => {
 
     expect(getByText("testing image 1")).toBeInTheDocument()
   })
+})
 
+describe("Carousel Arrows Visibility", () => {
+  it("hides the left arrow on the first image", () => {
+    const { container } = render(
+      <Carousel photos={TEST_IMAGES} title="Test Carousel" />
+    )
+
+    const leftArrow = container.querySelector(".bi-arrow-left-circle")
+    expect(leftArrow).not.toBeInTheDocument()
+  })
+
+  it("hides the arrow on the last image", () => {
+    const { container } = render(
+      <Carousel photos={TEST_IMAGES} title="Test Carousel" />
+    )
+    const rightArrow = container.query(".bi-arrow-right-circle")
+    fireEvent.click(rightArrow)
+    fireEvent.click(rightArrow)
+
+    expect(rightArrow).not.toBeInTheDocument()
+  })
 })
